@@ -24,7 +24,7 @@ spec:
         path: '{{path}}'
       destination:
         server: "https://kubernetes.default.svc"
-        namespace: 'applicationset'
+        namespace: 'japplicationset'
       syncPolicy:
         automated:
           prune: true
