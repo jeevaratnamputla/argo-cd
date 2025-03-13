@@ -12,9 +12,13 @@ spec:
             targetRevision: main
             path: applicationset/data
           - name: list-applicationset-app2
-            repoURL: https://github.com/jeevaratnamputla/argo-workflows.git         
+            repoURL: https://github.com/jeevaratnamputla/argo-workflows.git       #cm  
             targetRevision: main
             path: config-map
+          - name: list-applicationset-app3
+            repoURL: https://github.com/argoproj/argocd-example-apps.git          
+            targetRevision: main
+            path: guestbook
   template:
     metadata:
       name: '{{name}}'
