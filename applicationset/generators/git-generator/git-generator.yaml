@@ -11,6 +11,7 @@ spec:
         revision: "main"
         directories:
           - path: "applicationset/data/cm"
+          - path: "applicationset/data/pod"
   template:
     metadata:
       name: '{{path.basename}}'
