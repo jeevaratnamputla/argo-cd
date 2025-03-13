@@ -10,7 +10,7 @@ spec:
           - name: list-applicationset-app
             repoURL: https://github.com/jeevaratnamputla/argo-cd.git          #pod
             targetRevision: main
-            path: applicationset/data/service
+            path: applicationset/data
   template:
     metadata:
       name: '{{name}}'
