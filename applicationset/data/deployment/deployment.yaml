@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app-deployment  # Name of the deployment
+  namespace: default  # Namespace where the deployment will be created
+spec:
+  replicas: 3  # Number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: my-app  # Label selector to match pods created by this deployment
+  template:
+    metadata:
+      labels:
+        app: my-app  # Label for the pods created by this deployment
+    spec:
+      containers:
+        - name: my-app-container  # Name of the container
+          image: my-app-image:latest  # Docker image to run
+          ports:
+            - containerPort: 8080  # Port the container exposes
+          resources:
+            limits:
+              cpu: "500m"  # Maximum CPU resources for the container
+              memory: "512Mi"  # Maximum memory for the container
+            requests:
+              cpu: "250m"  # Minimum CPU resources for the container
+              memory: "256Mi"  # Minimum memory for the container
