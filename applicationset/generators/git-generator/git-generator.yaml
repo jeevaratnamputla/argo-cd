@@ -10,7 +10,7 @@ spec:
         repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"
         revision: "main"
         directories:
-          - path: "applicationset/data"
+          - path: "applicationset/data/cm"
   template:
     metadata:
       name: '{{path.basename}}'
