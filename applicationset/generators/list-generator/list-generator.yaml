@@ -14,7 +14,7 @@ spec:
       - list:
         elements:
           - name: list-applicationset-app2
-            repoURL: https://github.com/argoproj/argocd-example-apps.git         
+            repoURL: https://github.com/jeevaratnamputla/argo-workflows.git         
             targetRevision: main
             path: guestbook
   template:
