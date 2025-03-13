@@ -7,10 +7,16 @@ spec:
   generators:
     - list:
         elements:
-          - name: list-applicationset-app
+          - name: list-applicationset-app1
             repoURL: https://github.com/jeevaratnamputla/argo-cd.git          #pod
             targetRevision: main
             path: applicationset/data
+      - list:
+        elements:
+          - name: list-applicationset-app2
+            repoURL: https://github.com/argoproj/argocd-example-apps.git         
+            targetRevision: main
+            path: guestbook
   template:
     metadata:
       name: '{{name}}'
