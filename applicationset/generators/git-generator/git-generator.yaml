@@ -1,0 +1,33 @@
+# this generator i use for one git source and one helm source
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: jeevan-git-generator
+  namespace: argocd
+spec:
+  generators:
+    - git:                 
+        repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"
+        revision: "main"
+        directories:
+          - path: "data/*"
+  template:
+    metadata:
+      name: '{{path.basename}}'
+      labels:
+         for: cnoe
+    spec:
+      project: default
+      source:
+        repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"
+        targetRevision: "main"
+        path: '{{path}}'
+      destination:
+        server: "https://kubernetes.default.svc"
+        namespace: 'applicationset'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
