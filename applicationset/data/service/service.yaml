@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service  # Name of the service
+  namespace: default  # The namespace where the service is located
+spec:
+  selector:
+    app: my-app  # The label that matches the pods to be targeted
+  ports:
+    - protocol: TCP
+      port: 80         # The port the service will expose to the outside world
+      targetPort: 8080  # The port on the container where the application is running
+  type: ClusterIP  # Type of service (ClusterIP, NodePort, LoadBalancer, etc.)
