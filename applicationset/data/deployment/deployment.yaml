@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my-app-deployment
+  name: nginx-deployment
 spec:
-  replicas: 3
+  replicas: 2  # Number of NGINX pods to run
   selector:
     matchLabels:
-      app: my-app
+      app: nginx
   template:
     metadata:
       labels:
-        app: my-app
+        app: nginx
     spec:
       containers:
-        - name: my-app-container
-          image: my-app-image:latest
+        - name: nginx
+          image: nginx:latest  # Use the latest NGINX Docker image
           ports:
-            - containerPort: 8080
+            - containerPort: 80  # Expose port 80 for HTTP traffic
