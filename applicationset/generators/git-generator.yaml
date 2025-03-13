@@ -2,29 +2,29 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: git-application-set
+  name: jeevan-git-generator
   namespace: argocd
 spec:
   generators:
     - git:                 
-        repoURL: "https://github.com/OpsMx/argo-customer-demo.git"
-        revision: "testcase"
+        repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"
+        revision: "main"
         directories:
-          - path: "source-data/application-set-data/git-data/*"
+          - path: "data/*"
   template:
     metadata:
       name: '{{path.basename}}'
       labels:
-         for: jpmc
+         for: cnoe
     spec:
       project: default
       source:
-        repoURL: "https://github.com/OpsMx/argo-customer-demo.git"
-        targetRevision: "testcase"
+        repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"
+        targetRevision: "main"
         path: '{{path}}'
       destination:
         server: "https://kubernetes.default.svc"
-        namespace: 'argocd-kt'
+        namespace: 'applicationset'
       syncPolicy:
         automated:
           prune: true
