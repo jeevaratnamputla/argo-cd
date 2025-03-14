@@ -13,13 +13,13 @@ spec:
         - path: "applicationset/data/service.yaml"
   template:
     metadata:
-      name: '{{.path.basename}}-application'  # Application name derived from the file's basename
+      name: '{{ .name }}-application'  # Application name derived from the file's basename
     spec:
       project: default
       source:
         repoURL: https://github.com/jeevaratnamputla/argo-cd.git
         targetRevision: main
-        path: "applicationset/data"
+        path: '{{ .path }}'
       destination:
         server: https://kubernetes.default.svc
         #server: '{{.cluster.address}}'
