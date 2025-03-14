@@ -19,7 +19,7 @@ spec:
           # list generator, 'child' #2
           - list:
               elements:
-                - name: list-applicationset-app10
+                # - name: matrix-applicationset-app1
                   # repoURL: https://github.com/jeevaratnamputla/argo-cd.git          
                   # targetRevision: main
                   # path: applicationset/data
