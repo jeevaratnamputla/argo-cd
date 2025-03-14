@@ -37,3 +37,9 @@ spec:
       destination:
         server: '{{.server}}'  # Dynamic server from list generator
         namespace: '{{.namespace}}'  # Dynamic namespace from list generator
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
