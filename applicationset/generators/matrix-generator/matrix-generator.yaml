@@ -25,7 +25,7 @@ spec:
                   namespace: j-applicationset
   template:
     metadata:
-      name: name: '{{appName}}-{{path | replace "/" "-" }}'  # Combine path basename and name for unique app names
+      name: '{{appName}}-{{path | replace "/" "-" }}'  # Combine path basename and name for unique app names
     spec:
       project: default  # Default Argo CD project
       source:
