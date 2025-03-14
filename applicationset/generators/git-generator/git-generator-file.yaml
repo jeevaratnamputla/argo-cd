@@ -13,7 +13,7 @@ spec:
         - path: "applicationset/data/service.yaml"
   template:
     metadata:
-      name: '{{.cluster.name}}-jeevan'
+      name: '{{.path.basename}}-application'  # Application name derived from the file's basename
     spec:
       project: default
       source:
