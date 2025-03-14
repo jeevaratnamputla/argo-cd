@@ -1,0 +1,36 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: jeevan-matrix-generator
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    # matrix 'parent' generator
+    - matrix:
+        generators:
+          # git generator, 'child' #1
+          - git:                 
+             repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"             #cm
+             revision: "main"
+             directories:
+               - path: "applicationset/data/cm"                             
+          # list generator, 'child' #2
+          - list:
+              elements:
+                - name: list-applicationset-app1
+                  repoURL: https://github.com/jeevaratnamputla/argo-cd.git          
+                  targetRevision: main
+                  path: applicationset/data
+  template:
+    metadata:
+      name: '{{.path.basename}}-{{.name}}'
+    spec:
+      project: '{{index .metadata.labels "environment"}}'
+      source:
+        repoURL: https://github.com/jeevaratnamputla/argo-cd.git
+        targetRevision: main
+        path: '{{.path.path}}'
+      destination:
+        server: '{{.server}}'
+        namespace: '{{.path.basename}}'
