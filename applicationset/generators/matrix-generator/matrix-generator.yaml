@@ -25,16 +25,16 @@ spec:
                   namespace: j-applicationset
   template:
     metadata:
-      name: '{{appName}}-{{path | trimAll "/" | replace "/" "-" }}'  # Combine path basename and name for unique app names
+      name: '{{ .appName }}-{{ .path | trimAll "/" | replace "/" "-" }}'  # Combine path basename and name for unique app names
     spec:
       project: default  # Default Argo CD project
       source:
         repoURL: https://github.com/jeevaratnamputla/argo-cd.git  # Same repo for all applications
         targetRevision: main
-        path: '{{path}}'  # Use the dynamic path from the git generator
+        path: '{{ .path }}'  # Use the dynamic path from the git generator
       destination:
-        server: '{{server}}'  # Dynamic server from list generator
-        namespace: '{{namespace}}'  # Dynamic namespace from list generator
+        server: '{{ .server }}'  # Dynamic server from list generator
+        namespace: '{{ .namespace }}'  # Dynamic namespace from list generator
       syncPolicy:
         automated:
           prune: true
