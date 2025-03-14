@@ -8,7 +8,7 @@ spec:
   generators:
     - git:
         repoURL: https://github.com/jeevaratnamputla/argo-cd.git
-        revision: HEAD
+        revision: main
         files:
         - path: "applicationset/data/cm/cm.yaml"
   template:
@@ -18,7 +18,7 @@ spec:
       project: default
       source:
         repoURL: https://github.com/jeevaratnamputla/argo-cd.git
-        targetRevision: HEAD
+        targetRevision: main
         path: "applicationset/data/cm"
       destination:
         server: https://kubernetes.default.svc
