@@ -11,7 +11,7 @@ spec:
     - matrix:
         generators:
           # git generator, 'child' #1
-          - git:                 
+          - git:
              repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"             #cm
              revision: "main"
              directories:
@@ -25,7 +25,7 @@ spec:
                   namespace: j-applicationset
   template:
     metadata:
-      name: '{{path}}-{{appName}}'  # Combine path basename and name for unique app names
+      name: '{{name}}-{{appName}}'  # Combine path basename and name for unique app names
     spec:
       project: default  # Default Argo CD project
       source:
