@@ -4,8 +4,8 @@ metadata:
   name: jeevan-matrix-generator
   namespace: argocd
 spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
+  # goTemplate: true
+  # goTemplateOptions: ["missingkey=error"]
   generators:
     # matrix 'parent' generator
     - matrix:
