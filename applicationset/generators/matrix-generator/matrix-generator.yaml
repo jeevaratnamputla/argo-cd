@@ -33,7 +33,7 @@ spec:
       source:
         repoURL: https://github.com/jeevaratnamputla/argo-cd.git  # Same repo for all applications
         targetRevision: main
-        path: '{{.path.path}}'  # Use the dynamic path from the git generator
+        path: '{{.path}}'  # Use the dynamic path from the git generator
       destination:
         server: '{{.server}}'  # Dynamic server from list generator
         namespace: '{{.namespace}}'  # Dynamic namespace from list generator
