@@ -10,7 +10,7 @@ spec:
         repoURL: https://github.com/jeevaratnamputla/argo-cd.git
         revision: main
         files:
-        - path: "applicationset/data"
+        - path: "service.yaml"
   template:
     metadata:
       name: '{{.path.basename}}-application'  # Application name derived from the file's basename
