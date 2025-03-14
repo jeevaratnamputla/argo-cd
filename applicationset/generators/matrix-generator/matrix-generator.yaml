@@ -12,6 +12,7 @@ spec:
         generators:
           # git generator, 'child' #1
           - git:
+             name: g1
              repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"             #cm
              revision: "main"
              directories:
