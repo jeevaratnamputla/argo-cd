@@ -1,1 +1,14 @@
-
+[
+  {
+    "name": "app-one",
+    "namespace": "default",
+    "cluster": "https://kubernetes.default.svc",
+    "path": "applicationset/data/service.yaml"
+  },
+  {
+    "name": "app-two",
+    "namespace": "default",
+    "cluster": "https://kubernetes.default.svc",
+    "path": "applicationset/data/deployment.yaml"
+  }
+]
