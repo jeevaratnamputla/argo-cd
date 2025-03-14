@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: jeevan-gitgenerator-file
+  name: jeevan-git-generator-file
 spec:
   goTemplate: true
   goTemplateOptions: ["missingkey=error"]
   generators:
     - git:
-        repoURL: https://github.com/argoproj/argo-cd.git
+        repoURL: https://github.com/jeevaratnamputla/argo-cd.git
         revision: HEAD
         files:
-        - path: "applicationset/examples/git-generator-files-discovery/cluster-config/**/config.json"
+        - path: "applicationset/data/cm/cm.yaml"
   template:
     metadata:
       name: '{{.cluster.name}}-guestbook'
     spec:
       project: default
       source:
-        repoURL: https://github.com/argoproj/argo-cd.git
+        repoURL: https://github.com/jeevaratnamputla/argo-cd.git
         targetRevision: HEAD
-        path: "applicationset/examples/git-generator-files-discovery/apps/guestbook"
+        path: "applicationset/data/cm"
       destination:
         server: https://kubernetes.default.svc
         #server: '{{.cluster.address}}'
-        namespace: guestbook
+        namespace: japplicationset
