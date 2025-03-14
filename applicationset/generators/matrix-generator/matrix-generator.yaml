@@ -20,12 +20,12 @@ spec:
           # list generator, 'child' #2
           - list:
               elements:
-                - appName: my
+                - appName: g1
                   server: "https://kubernetes.default.svc"
                   namespace: j-applicationset
   template:
     metadata:
-      name: '{{path | replace '/' '-'}}-{{appName}}'  # Combine path basename and name for unique app names
+      name: '{{appName}}-{{path | replace '/' '-'}}'  # Combine path basename and name for unique app names
     spec:
       project: default  # Default Argo CD project
       source:
