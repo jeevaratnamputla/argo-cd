@@ -5,10 +5,12 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:  
+  source:
+    directory:
+      recurse: true
     repoURL: https://github.com/jeevaratnamputla/argo-cd.git
     targetRevision: main
-    path: applicationset/generators/matrix-generator
+    path: applicationset/generators/git-generator/
   destination:
     server: https://kubernetes.default.svc
     namespace: test
