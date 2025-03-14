@@ -24,13 +24,13 @@ spec:
                   path: applicationset/data
   template:
     metadata:
-      name: '{{.path.basename}}-{{.name}}'
+      name: '{{.path.basename}}-{{.name}}'  # Combine path basename and name for unique app names
     spec:
-      project: '{{index .metadata.labels "environment"}}'
+      project: default  # Default Argo CD project
       source:
-        repoURL: https://github.com/jeevaratnamputla/argo-cd.git
+        repoURL: https://github.com/jeevaratnamputla/argo-cd.git  # Same repo for all applications
         targetRevision: main
-        path: '{{.path.path}}'
+        path: '{{.path.path}}'  # Use the dynamic path from the git generator
       destination:
-        server: '{{.server}}'
-        namespace: '{{.path.basename}}'
+        server: '{{.server}}'  # Dynamic server from list generator
+        namespace: '{{.namespace}}'  # Dynamic namespace from list generator
