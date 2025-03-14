@@ -3,7 +3,7 @@
     "name": "app-one",
     "namespace": "default",
     "cluster": "https://kubernetes.default.svc",
-    "path": "applicationset/data/service.yaml"
+    "path": "applicationset/data"
   },
   {
     "name": "app-two",
