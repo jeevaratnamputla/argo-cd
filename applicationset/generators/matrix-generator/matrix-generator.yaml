@@ -13,7 +13,7 @@ spec:
           # git generator, 'child' #1
           - git:
               repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"             #cm
-              targetRevision: "main"
+              revision: "main"
               directories:
                - path: "applicationset/data/cm" 
                - path: "applicationset/data/pod"               #pod
