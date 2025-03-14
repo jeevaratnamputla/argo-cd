@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: jeevan-git-generator
+  name: jeevan-git-generator-directory
   namespace: argocd
 spec:
   generators:
