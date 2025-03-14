@@ -14,7 +14,7 @@ spec:
         - path: "applicationset/data/service.yaml"
   template:
     metadata:
-      name: '{{ .name }}-application'  # Application name derived from the file's basename
+      name: '{{ .name }}-g11'  # Application name derived from the file's basename
     spec:
       project: default
       source:
