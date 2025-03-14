@@ -14,14 +14,16 @@ spec:
              repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"             #cm
              revision: "main"
              directories:
-               - path: "applicationset/data/cm"                             
+               - path: "applicationset/data/cm" 
+               - path: "applicationset/data/pod"               #pod
           # list generator, 'child' #2
           - list:
               elements:
                 - name: list-applicationset-app1
-                  repoURL: https://github.com/jeevaratnamputla/argo-cd.git          
-                  targetRevision: main
-                  path: applicationset/data
+                  # repoURL: https://github.com/jeevaratnamputla/argo-cd.git          
+                  # targetRevision: main
+                  # path: applicationset/data
+                  namespace: japplicationset
   template:
     metadata:
       name: '{{.path.basename}}-{{.name}}'  # Combine path basename and name for unique app names
