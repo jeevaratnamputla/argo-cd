@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata: 
-  name: my-app
+  name: jeevn-my-app
   namespace: argocd
 spec:
   project: default
   source:  
-    repoURL: https://github.com/bitthalpatidar/test-argo.git 
+    repoURL: https://github.com/jeevaratnamputla/argo-cd.git
     targetRevision: main
-    path: cm
+    path: applicationset/generators/matrix-generator
   destination:
     server: https://kubernetes.default.svc
     namespace: test
