@@ -15,7 +15,7 @@ spec:
              revision: "main"
              directories:
                - path: "applicationset/data/cm" 
-               - path: "applicationset/data/pod"               #pod
+               #- path: "applicationset/data/pod"               #pod
           # list generator, 'child' #2
           - list:
               elements:
