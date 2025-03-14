@@ -12,7 +12,7 @@ spec:
           - git:
               repoURL: "https://github.com/jeevaratnamputla/argo-cd.git"
               revision: "main"
-              files:
+              directories:
                 - path: "applicationset/data/cm"
                 - path: "applicationset/data/pod"
           # List Generator - Static list of parameters
