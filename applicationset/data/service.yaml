@@ -1,6 +1,6 @@
 name: my-service
 sourcePath: applicationset/data/cm
-namespace: my-namespace
+namespace: japplicationset
 
 
 # apiVersion: v1
