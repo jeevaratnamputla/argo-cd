@@ -1,27 +1,27 @@
-apiVersion: argoproj.io/v1alpha1
-kind: ApplicationSet
-metadata:
-  name: jeevan-git-generator-file
-  namespace: argocd
-spec:
-  goTemplate: true
-  goTemplateOptions: ["missingkey=error"]
-  generators:
-    - git:
-        repoURL: https://github.com/jeevaratnamputla/argo-cd.git
-        revision: main
-        files:
-        - path: "applicationset/data/cm"
-  template:
-    metadata:
-      name: '{{ .name }}-Application'  # Application name derived from the file's basename
-    spec:
-      project: default
-      source:
-        repoURL: https://github.com/jeevaratnamputla/argo-cd.git
-        targetRevision: main
-        path: '{{ .sourcePath }}'
-      destination:
-        server: https://kubernetes.default.svc
-        #server: '{{.cluster.address}}'
-        namespace: '{{ .namespace }}'
+# apiVersion: argoproj.io/v1alpha1
+# kind: ApplicationSet
+# metadata:
+#   name: jeevan-git-generator-file
+#   namespace: argocd
+# spec:
+#   goTemplate: true
+#   goTemplateOptions: ["missingkey=error"]
+#   generators:
+#     - git:
+#         repoURL: https://github.com/jeevaratnamputla/argo-cd.git
+#         revision: main
+#         files:
+#         - path: "applicationset/data/cm"
+#   template:
+#     metadata:
+#       name: '{{ .name }}-Application'  # Application name derived from the file's basename
+#     spec:
+#       project: default
+#       source:
+#         repoURL: https://github.com/jeevaratnamputla/argo-cd.git
+#         targetRevision: main
+#         path: '{{ .sourcePath }}'
+#       destination:
+#         server: https://kubernetes.default.svc
+#         #server: '{{.cluster.address}}'
+#         namespace: '{{ .namespace }}'
