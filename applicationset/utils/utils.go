@@ -14,7 +14,7 @@ import (
 	"regexp"
 	"sort"
 	"strings"
-	"text/template"
+	"html/template"
 	"unsafe"
 
 	"github.com/Masterminds/sprig/v3"
