@@ -8,7 +8,7 @@ You'll need to authorize your API requests using a bearer token. To get a token:
 
 ```bash
 $ curl -H "Content-Type: application/json" $ARGOCD_SERVER/api/v1/session -d $'{"username":"admin","password":"password"}'
-{"token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE1Njc4MTIzODcsImlzcyI6ImFyZ29jZCIsIm5iZiI6MTU2NzgxMjM4Nywic3ViIjoiYWRtaW4ifQ.ejyTgFxLhuY9mOBtKhcnvobg3QZXJ4_RusN_KIdVwao"} 
+{"token":"<JWT_TOKEN>"}
 ```
 
 Then pass using the HTTP `Authorization` header, prefixing it with `Bearer `:
