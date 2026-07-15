@@ -166,7 +166,7 @@ data:
     name: Zitadel
     issuer: https://auth.example.com
     clientID: 227060711795262483@argocd-project
-    clientSecret: UGvTjXVFAQ8EkMv2x4GbPcrEwrJGWZ0sR2KbwHRNfYxeLsDurCiVEpa5bkgW0pl0
+    clientSecret: $oidc.zitadel.clientSecret
     requestedScopes:
       - openid
       - profile
