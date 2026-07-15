@@ -141,9 +141,23 @@ window.addEventListener("DOMContentLoaded", function() {
   if (currentVersion && currentVersion !== "stable") {
     var stableUrl = window.location.href.replace(VERSION_REGEX, '/en/stable/');
     if (currentVersion === "latest") {
-      document.querySelector("div[data-md-component=announce]").innerHTML = "<div id='announce-msg'>You are viewing the docs for an unreleased version of Argo CD, <a href='" + stableUrl + "'>view the latest stable version.</a></div>";
+      var announceDiv = document.createElement('div');
+      announceDiv.id = 'announce-msg';
+      var announceLink = document.createElement('a');
+      announceLink.setAttribute('href', stableUrl);
+      announceLink.textContent = 'view the latest stable version.';
+      announceDiv.appendChild(document.createTextNode('You are viewing the docs for an unreleased version of Argo CD, '));
+      announceDiv.appendChild(announceLink);
+      document.querySelector("div[data-md-component=announce]").appendChild(announceDiv);
     } else {
-      document.querySelector("div[data-md-component=announce]").innerHTML = "<div id='announce-msg'>You are viewing the docs for a previous version of Argo CD, <a href='" + stableUrl + "'>view the latest stable version.</a></div>";
+      var announceDiv = document.createElement('div');
+      announceDiv.id = 'announce-msg';
+      var announceLink = document.createElement('a');
+      announceLink.setAttribute('href', stableUrl);
+      announceLink.textContent = 'view the latest stable version.';
+      announceDiv.appendChild(document.createTextNode('You are viewing the docs for a previous version of Argo CD, '));
+      announceDiv.appendChild(announceLink);
+      document.querySelector("div[data-md-component=announce]").appendChild(announceDiv);
     }
     var bannerHeight = document.getElementById('announce-msg').offsetHeight + margin;
     document.querySelector("header.md-header").style.top = bannerHeight + "px";
