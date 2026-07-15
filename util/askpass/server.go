@@ -10,6 +10,7 @@ import (
 	"github.com/google/uuid"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/status"
 
 	"github.com/argoproj/argo-cd/v3/util/git"
@@ -68,7 +69,7 @@ func (s *server) Start(path string) (utilio.Closer, error) {
 	if err != nil {
 		return nil, err
 	}
-	server := grpc.NewServer()
+	server := grpc.NewServer(grpc.Creds(insecure.NewCredentials()))
 	RegisterAskPassServiceServer(server, s)
 	go func() {
 		_ = server.Serve(listener)
