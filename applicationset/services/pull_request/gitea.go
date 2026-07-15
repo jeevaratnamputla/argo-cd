@@ -29,7 +29,9 @@ func NewGiteaService(token, url, owner, repo string, labels []string, insecure b
 
 	tr := http.DefaultTransport.(*http.Transport).Clone()
 	if insecure {
-		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true}
+		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true, MinVersion: tls.VersionTLS13}
+	} else {
+		tr.TLSClientConfig = &tls.Config{MinVersion: tls.VersionTLS13}
 	}
 	tr.Proxy = proxy.GetCallback(proxyURL, noProxy)
 
