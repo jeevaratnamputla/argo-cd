@@ -121,20 +121,7 @@ func (h *DefaultPluginHandler) executePlugin(executablePath string, cmdArgs, env
 
 // command creates a new command for all OSs
 func (h *DefaultPluginHandler) command(name string, arg ...string) *exec.Cmd {
-	cmd := &exec.Cmd{
-		Path: name,
-		Args: append([]string{name}, arg...),
-	}
-	if filepath.Base(name) == name {
-		lp, err := h.lookPath(name)
-		if lp != "" && err != nil {
-			// Update cmd.Path even if err is non-nil.
-			// If err is ErrDot (especially on Windows), lp may include a resolved
-			// extension (like .exe or .bat) that should be preserved.
-			cmd.Path = lp
-		}
-	}
-	return cmd
+	return exec.Command(name, arg...)
 }
 
 // ListAvailablePlugins returns a list of plugin names that are available in the user's PATH
