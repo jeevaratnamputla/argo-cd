@@ -29,9 +29,9 @@ func NewGiteaService(token, url, owner, repo string, labels []string, insecure b
 
 	tr := http.DefaultTransport.(*http.Transport).Clone()
 	if insecure {
-		// #nosec G402 -- InsecureSkipVerify is intentionally configurable for environments
-		// using self-signed certificates. This should never be enabled in production.
-		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true, MinVersion: tls.VersionTLS12}
+		tr.TLSClientConfig = &tls.Config{InsecureSkipVerify: true, MinVersion: tls.VersionTLS13}
+	} else {
+		tr.TLSClientConfig = &tls.Config{MinVersion: tls.VersionTLS13}
 	}
 	tr.Proxy = proxy.GetCallback(proxyURL, noProxy)
 
