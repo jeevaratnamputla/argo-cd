@@ -122,8 +122,9 @@ func revokeServerToken(scheme, hostName, token string, insecure bool) (res *http
 		return nil, err
 	}
 	cookie := &http.Cookie{
-		Name:  common.AuthCookieName,
-		Value: token,
+		Name:     common.AuthCookieName,
+		Value:    token,
+		HttpOnly: true,
 	}
 	req.AddCookie(cookie)
 
