@@ -196,6 +196,11 @@ func (g *GitGenerator) generateParamsForGitFiles(appSetGenerator *argoprojiov1al
 		}
 	}
 
+	// If no files remain after applying include/exclude patterns, return early
+	if len(fileContentMap) == 0 {
+		return []map[string]any{}, nil
+	}
+
 	// Get a sorted list of file paths to ensure deterministic processing order
 	var filePaths []string
 	for path := range fileContentMap {
