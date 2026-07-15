@@ -118,6 +118,7 @@ func (t *terminalSession) reconnect() (int, error) {
 		Data:      ReconnectMessage,
 	})
 	t.writeLock.Lock()
+	defer t.writeLock.Unlock()
 	err := t.wsConn.WriteMessage(websocket.TextMessage, reconnectMessage)
 	if err != nil {
 		log.Errorf("write message err: %v", err)
@@ -128,7 +129,6 @@ func (t *terminalSession) reconnect() (int, error) {
 		log.Errorf("write message err: %v", err)
 		return 0, err
 	}
-	t.writeLock.Unlock()
 	return 0, nil
 }
 
