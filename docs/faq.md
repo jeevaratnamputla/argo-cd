@@ -65,10 +65,10 @@ To change the password, edit the `argocd-secret` secret and update the `admin.pa
 To apply the new password hash, use the following command (replacing the hash with your own):
 
 ```bash
-# bcrypt(password)=$2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa
+# bcrypt(password)=<YOUR-BCRYPT-HASH-HERE>
 kubectl -n argocd patch secret argocd-secret \
   -p '{"stringData": {
-    "admin.password": "$2a$10$rRyBsGSHK6.uc8fntPwVIuLVHgsAhAX7TcdrqW/RADU0uh7CaChLa",
+    "admin.password": "<YOUR-BCRYPT-HASH-HERE>",
     "admin.passwordMtime": "'$(date +%FT%T%Z)'"
   }}'
 ```
