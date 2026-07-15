@@ -2136,14 +2136,21 @@ func (rs *resourceState) FormatItems() []any {
 // Returns whether or not any keys were updated.
 func (rs *resourceState) Merge(newState *resourceState) bool {
 	updated := false
-	for _, field := range []string{"Status", "Health", "Hook", "Message"} {
-		v := reflect.ValueOf(rs).Elem().FieldByName(field)
-		currVal := v.String()
-		newVal := reflect.ValueOf(newState).Elem().FieldByName(field).String()
-		if newVal != "" && currVal != newVal {
-			v.SetString(newVal)
-			updated = true
-		}
+	if newState.Status != "" && rs.Status != newState.Status {
+		rs.Status = newState.Status
+		updated = true
+	}
+	if newState.Health != "" && rs.Health != newState.Health {
+		rs.Health = newState.Health
+		updated = true
+	}
+	if newState.Hook != "" && rs.Hook != newState.Hook {
+		rs.Hook = newState.Hook
+		updated = true
+	}
+	if newState.Message != "" && rs.Message != newState.Message {
+		rs.Message = newState.Message
+		updated = true
 	}
 	return updated
 }
