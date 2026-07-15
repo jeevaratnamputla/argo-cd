@@ -85,13 +85,45 @@ func NewRunDexCommand() *cobra.Command {
 					log.Fatalf("could not create TLS config: %v", err)
 				}
 				certPem, keyPem := tls.EncodeX509KeyPair(config.Certificates[0])
-				err = os.WriteFile("/tmp/tls.crt", certPem, 0o600)
+
+				tlsCertTmp, err := os.CreateTemp("/tmp", "tls-crt-*")
 				if err != nil {
+					log.Fatalf("could not create temp file for TLS certificate: %v", err)
+				}
+				if _, err = tlsCertTmp.Write(certPem); err != nil {
+					tlsCertTmp.Close()
+					os.Remove(tlsCertTmp.Name())
 					log.Fatalf("could not write TLS certificate: %v", err)
 				}
-				err = os.WriteFile("/tmp/tls.key", keyPem, 0o600)
+				if err = tlsCertTmp.Chmod(0o600); err != nil {
+					tlsCertTmp.Close()
+					os.Remove(tlsCertTmp.Name())
+					log.Fatalf("could not set permissions on TLS certificate: %v", err)
+				}
+				tlsCertTmp.Close()
+				if err = os.Rename(tlsCertTmp.Name(), "/tmp/tls.crt"); err != nil {
+					os.Remove(tlsCertTmp.Name())
+					log.Fatalf("could not move TLS certificate into place: %v", err)
+				}
+
+				tlsKeyTmp, err := os.CreateTemp("/tmp", "tls-key-*")
 				if err != nil {
+					log.Fatalf("could not create temp file for TLS key: %v", err)
+				}
+				if _, err = tlsKeyTmp.Write(keyPem); err != nil {
+					tlsKeyTmp.Close()
+					os.Remove(tlsKeyTmp.Name())
 					log.Fatalf("could not write TLS key: %v", err)
+				}
+				if err = tlsKeyTmp.Chmod(0o600); err != nil {
+					tlsKeyTmp.Close()
+					os.Remove(tlsKeyTmp.Name())
+					log.Fatalf("could not set permissions on TLS key: %v", err)
+				}
+				tlsKeyTmp.Close()
+				if err = os.Rename(tlsKeyTmp.Name(), "/tmp/tls.key"); err != nil {
+					os.Remove(tlsKeyTmp.Name())
+					log.Fatalf("could not move TLS key into place: %v", err)
 				}
 			}
 
@@ -108,8 +140,18 @@ func NewRunDexCommand() *cobra.Command {
 				if len(dexCfgBytes) == 0 {
 					log.Infof("dex is not configured")
 				} else {
-					err = os.WriteFile("/tmp/dex.yaml", dexCfgBytes, 0o644)
+					dexYamlTmp, err := os.CreateTemp("/tmp", "dex-yaml-*")
 					errors.CheckError(err)
+					if _, err = dexYamlTmp.Write(dexCfgBytes); err != nil {
+						dexYamlTmp.Close()
+						os.Remove(dexYamlTmp.Name())
+						errors.CheckError(err)
+					}
+					dexYamlTmp.Close()
+					if err = os.Rename(dexYamlTmp.Name(), "/tmp/dex.yaml"); err != nil {
+						os.Remove(dexYamlTmp.Name())
+						errors.CheckError(err)
+					}
 					log.Debug(redactor(string(dexCfgBytes)))
 					cmd = exec.CommandContext(ctx, "dex", "serve", "/tmp/dex.yaml")
 					cmd.Stdout = os.Stdout
