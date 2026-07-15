@@ -57,6 +57,8 @@ func NewCommand() *cobra.Command {
 		metricsAddr                  string
 		probeBindAddr                string
 		webhookAddr                  string
+		webhookTLSCertPath           string
+		webhookTLSKeyPath            string
 		enableLeaderElection         bool
 		applicationSetNamespaces     []string
 		argocdRepoServer             string
@@ -242,7 +244,7 @@ func NewCommand() *cobra.Command {
 				log.Error(err, "failed to create webhook handler")
 			}
 			if webhookHandler != nil {
-				startWebhookServer(webhookHandler, webhookAddr)
+				startWebhookServer(webhookHandler, webhookAddr, webhookTLSCertPath, webhookTLSKeyPath)
 			}
 
 			metrics := appsetmetrics.NewApplicationsetMetrics(
@@ -294,6 +296,8 @@ func NewCommand() *cobra.Command {
 	command.Flags().StringVar(&metricsAddr, "metrics-addr", ":8080", "The address the metric endpoint binds to.")
 	command.Flags().StringVar(&probeBindAddr, "probe-addr", ":8081", "The address the probe endpoint binds to.")
 	command.Flags().StringVar(&webhookAddr, "webhook-addr", ":7000", "The address the webhook endpoint binds to.")
+	command.Flags().StringVar(&webhookTLSCertPath, "webhook-tls-cert-path", env.StringFromEnv("ARGOCD_APPLICATIONSET_CONTROLLER_WEBHOOK_TLS_CERT_PATH", ""), "Path to the TLS certificate for the webhook server. A self-signed certificate is generated if not provided.")
+	command.Flags().StringVar(&webhookTLSKeyPath, "webhook-tls-key-path", env.StringFromEnv("ARGOCD_APPLICATIONSET_CONTROLLER_WEBHOOK_TLS_KEY_PATH", ""), "Path to the TLS private key for the webhook server. A self-signed key is generated if not provided.")
 	command.Flags().BoolVar(&enableLeaderElection, "enable-leader-election", env.ParseBoolFromEnv("ARGOCD_APPLICATIONSET_CONTROLLER_ENABLE_LEADER_ELECTION", false),
 		"Enable leader election for controller manager. "+
 			"Enabling this will ensure there is only one active controller manager.")
@@ -330,13 +334,23 @@ func NewCommand() *cobra.Command {
 	return &command
 }
 
-func startWebhookServer(webhookHandler *webhook.WebhookHandler, webhookAddr string) {
+func startWebhookServer(webhookHandler *webhook.WebhookHandler, webhookAddr, tlsCertPath, tlsKeyPath string) {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/api/webhook", webhookHandler.Handler)
 	go func() {
 		log.Infof("Starting webhook server %s", webhookAddr)
-		err := http.ListenAndServe(webhookAddr, mux)
+		tlsConfig, err := tls.CreateServerTLSConfig(tlsCertPath, tlsKeyPath, []string{"localhost"}, "")
 		if err != nil {
+			log.Errorf("failed to create TLS config for webhook server: %v", err)
+			os.Exit(1)
+		}
+		server := &http.Server{
+			Addr:      webhookAddr,
+			Handler:   mux,
+			TLSConfig: tlsConfig,
+		}
+		// Cert and key are already embedded in TLSConfig.Certificates, so empty strings are passed.
+		if err := server.ListenAndServeTLS("", ""); err != nil {
 			log.Error(err, "failed to start webhook server")
 			os.Exit(1)
 		}
